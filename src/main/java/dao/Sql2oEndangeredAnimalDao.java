@@ -11,10 +11,10 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
     @Override
     public void save(EndangeredAnimal animal) {
         try (Connection con =DB.sql2o.open()){
-            String sql = "INSERT INTO Animal (name,healthstatus,age,gender,record_date) values (:name,:healthstatus,:age, :gender ,now())";
+            String sql = "INSERT INTO endangeredanimal (name ,health_status ,age ,gender ,record_date) values (:name,:health_status,:age, :gender ,now())";
             int id = (int) con.createQuery(sql,true)
                     .addParameter("name",animal.getName())
-                    .addParameter("healthstatus",animal.getHealthStatus())
+                    .addParameter("health_status",animal.getHealthStatus())
                     .addParameter("age",animal.getAge())
                     .addParameter("gender",animal.getGender())
                     .executeUpdate()
@@ -29,7 +29,7 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
     @Override
     public EndangeredAnimal getById(int id) {
         try(Connection con = DB.sql2o.open()){
-            return con.createQuery("SELECT * FROM animal WHERE id = :id")
+            return con.createQuery("SELECT * FROM endangeredanimal WHERE id = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(EndangeredAnimal.class);
         }

@@ -3,18 +3,19 @@ package models;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Sighting {
-  public int AnimalId;
-  public String AnimalType;
+  public int Animal_Id;
+  public String Animal_Type;
 private Float longitude ;
 private Float latitude;
  Timestamp record_date;
  private int id;
 
   public Sighting(int animalId, String animalType,Float longitude,Float latitude) {
-    AnimalId = animalId;
-    AnimalType = animalType;
+    Animal_Id = animalId;
+    Animal_Type = animalType;
    this.longitude = longitude;
    this.latitude = latitude;
   }
@@ -36,19 +37,19 @@ private Float latitude;
     }
 
     public int getAnimalId() {
-    return AnimalId;
+    return Animal_Id;
   }
 
   public void setAnimalId(int animalId) {
-    AnimalId = animalId;
+    Animal_Id = animalId;
   }
 
   public String getAnimalType() {
-    return AnimalType;
+    return Animal_Type;
   }
 
   public void setAnimalType(String animalType) {
-    AnimalType = animalType;
+    Animal_Type = animalType;
   }
 
   public Float getLongitude() {
@@ -66,4 +67,33 @@ private Float latitude;
   public void setLatitude(Float latitude) {
     this.latitude = latitude;
   }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sighting sighting = (Sighting) o;
+        return Animal_Id == sighting.Animal_Id && id == sighting.id && Animal_Type.equals(sighting.Animal_Type) && longitude.equals(sighting.longitude) && latitude.equals(sighting.latitude);
+    }
+
+    public int getAnimal_Id() {
+        return Animal_Id;
+    }
+
+    public void setAnimal_Id(int animal_Id) {
+        Animal_Id = animal_Id;
+    }
+
+    public String getAnimal_Type() {
+        return Animal_Type;
+    }
+
+    public void setAnimal_Type(String animal_Type) {
+        Animal_Type = animal_Type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Animal_Id, Animal_Type, longitude, latitude, id);
+    }
 }

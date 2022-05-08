@@ -12,11 +12,12 @@ public class Sql2oSightingDao implements SightingDao {
     @Override
     public void save(Sighting sighting) {
         try (Connection con =DB.sql2o.open()){
-            String sql = "INSERT INTO sighting (animal_type,longitude,latitude,record_date) values (:animal_type,:longitude,:latitude,now())";
+            String sql = "INSERT INTO sighting (animal_id,animal_type,longitude,latitude,record_date) values (:animal_id,:animal_type,:longitude,:latitude,now())";
             int id = (int) con.createQuery(sql,true)
-                    .addParameter("animal_type",sighting.getAnimalId())
+                    .addParameter("animal_type",sighting.getAnimal_Type())
                     .addParameter("longitude",sighting.getLongitude())
                     .addParameter("latitude",sighting.getLatitude())
+                    .addParameter("animal_id",sighting.getAnimal_Id())
                     .executeUpdate()
                     .getKey();
             sighting.setId(id);

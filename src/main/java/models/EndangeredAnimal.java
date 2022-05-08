@@ -8,30 +8,23 @@ import java.util.Objects;
 public class EndangeredAnimal {
     public int id;
     public String name;
-    public String healthStatus;
+    public String health_status;
     public String age;
     public String gender;
 
-    private Timestamp record_date;
+    public Timestamp record_date;
     public final static List<String> HEALTH_STATUS = List.of("In good Health condition","In need of Urgent Veterinary care","Not in a bad shape can survive");
     public final static List<String> AGE_STATUS = List.of("Newborn","Young","Adult","Very Old");
     public final static List<String> GENDER_CHOICE = List.of("Male","Female");
 
-    public EndangeredAnimal(int id, String name, String healthStatus, String age, String gender) {
-        this.id = id;
+    public EndangeredAnimal( String name, String healthStatus, String age, String gender) {
         this.name = name;
-        this.healthStatus = healthStatus;
+        this.health_status = healthStatus;
         this.age = age;
         this.gender = gender;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EndangeredAnimal that = (EndangeredAnimal) o;
-        return id == that.id && name.equals(that.name) && healthStatus.equals(that.healthStatus) && age.equals(that.age) && gender.equals(that.gender);
-    }
+
 
     public int getId() {
         return id;
@@ -50,11 +43,11 @@ public class EndangeredAnimal {
     }
 
     public String getHealthStatus() {
-        return healthStatus;
+        return health_status;
     }
 
     public void setHealthStatus(String healthStatus) {
-        this.healthStatus = healthStatus;
+        this.health_status = healthStatus;
     }
 
     public String getAge() {
@@ -74,10 +67,33 @@ public class EndangeredAnimal {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, healthStatus, age, gender);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EndangeredAnimal animal = (EndangeredAnimal) o;
+        return id == animal.id && name.equals(animal.name) && health_status.equals(animal.health_status) && age.equals(animal.age) && gender.equals(animal.gender);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, health_status, age, gender);
+    }
+
+    public String getHealth_status() {
+        return health_status;
+    }
+
+    public void setHealth_status(String health_status) {
+        this.health_status = health_status;
+    }
+
+    public Timestamp getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(Timestamp record_date) {
+        this.record_date = record_date;
+    }
 
 
 }
