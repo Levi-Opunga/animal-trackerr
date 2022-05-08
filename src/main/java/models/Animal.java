@@ -1,12 +1,28 @@
 package models;
 
-public class Animal {
-    public String name;
-    public int id;
+import java.sql.Timestamp;
+import java.util.Objects;
 
-    public Animal(String name, int id) {
+public class Animal {
+    private String name;
+    private int id;
+
+   private Timestamp record_date;
+    public Animal(String name) {
         this.name = name;
-        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return id == animal.id && name.equals(animal.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id);
     }
 
     public String getName() {
@@ -19,6 +35,14 @@ public class Animal {
 
     public int getId() {
         return id;
+    }
+
+    public Timestamp getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(Timestamp record_date) {
+        this.record_date = record_date;
     }
 
     public void setId(int id) {
