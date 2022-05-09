@@ -14,7 +14,8 @@ public class Sighting {
 private Float longitude ;
 private Float latitude;
  Timestamp record_date;
- private int id;
+    private String date;
+    private int id;
 
   public Sighting(int animalId, String animalType,Float longitude,Float latitude) {
     Animal_Id = animalId;
@@ -22,6 +23,14 @@ private Float latitude;
    this.longitude = longitude;
    this.latitude = latitude;
   }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Timestamp getRecord_date() {
         return record_date;

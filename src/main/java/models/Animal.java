@@ -6,8 +6,17 @@ import java.util.Objects;
 public class Animal {
     private String name;
     private int id;
+   private String date;
 
-   private Timestamp record_date;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private Timestamp record_date;
     public Animal(String name) {
         this.name = name;
     }

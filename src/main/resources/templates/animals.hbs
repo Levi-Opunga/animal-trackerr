@@ -1,16 +1,27 @@
 {{#partial "content"}}
     {{#if animals}}
         {{#each animals}}
-            <div class="card">
+            <div class="card mt-3">
                 <h5 class="card-header " style="background-color:white; color:black;">Animal Id:{{id}}</h5>
                 <div class="card-body">
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">{{time_record}}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="card-footer">
+                    <a href="/animal/{{id}}">
+                        <button type="button" class="btn btn-secondary">Update</button>
+                    </a>
+                    <a href="/delete-animal/{{id}}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
                 </div>
             </div>
         {{/each}}
+        <a href="/delete-all-animals">
+            <button type="button" class="btn  mt-5 btn-secondary">Delete All</button>
+        </a>
     {{/if}}
+
 
 {{/partial}}
 {{>layout.hbs}}

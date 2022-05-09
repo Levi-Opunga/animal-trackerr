@@ -11,6 +11,15 @@ public class EndangeredAnimal {
     public String health_status;
     public String age;
     public String gender;
+    public String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Timestamp record_date;
     public final static List<String> HEALTH_STATUS = List.of("In good Health condition","In need of Urgent Veterinary care","Not in a bad shape can survive");

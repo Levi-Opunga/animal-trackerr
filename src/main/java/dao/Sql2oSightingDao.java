@@ -11,13 +11,13 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public void save(Sighting sighting) {
-        try (Connection con =DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO sighting (animal_id,animal_type,longitude,latitude,record_date) values (:animal_id,:animal_type,:longitude,:latitude,now())";
-            int id = (int) con.createQuery(sql,true)
-                    .addParameter("animal_type",sighting.getAnimal_Type())
-                    .addParameter("longitude",sighting.getLongitude())
-                    .addParameter("latitude",sighting.getLatitude())
-                    .addParameter("animal_id",sighting.getAnimal_Id())
+            int id = (int) con.createQuery(sql, true)
+                    .addParameter("animal_type", sighting.getAnimal_Type())
+                    .addParameter("longitude", sighting.getLongitude())
+                    .addParameter("latitude", sighting.getLatitude())
+                    .addParameter("animal_id", sighting.getAnimal_Id())
                     .executeUpdate()
                     .getKey();
             sighting.setId(id);
@@ -29,7 +29,7 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public Sighting getById(int id) {
-        try(Connection con = DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             return con.createQuery("SELECT * FROM sighting WHERE id = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(Sighting.class);
@@ -38,7 +38,7 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public List<Sighting> getAll() {
-        try(Connection con = DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             return con.createQuery("SELECT * FROM sighting")
                     .executeAndFetch(Sighting.class);
         }
@@ -51,7 +51,7 @@ public class Sql2oSightingDao implements SightingDao {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex){
+        } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
@@ -63,5 +63,19 @@ public class Sql2oSightingDao implements SightingDao {
             con.createQuery(sql).executeUpdate();
         }
 
+    }
+
+    @Override
+    public void update(Sighting sighting) {
+        try (Connection con = DB.sql2o.open()) {
+            String sql = "Update sighting (animal_id,animal_type,longitude,latitude,record_date) = (:animal_id,:animal_type,:longitude,:latitude,now()) where id=:id";
+            con.createQuery(sql, true)
+                    .addParameter("animal_type", sighting.getAnimal_Type())
+                    .addParameter("longitude", sighting.getLongitude())
+                    .addParameter("latitude", sighting.getLatitude())
+                    .addParameter("animal_id", sighting.getAnimal_Id())
+                    .addParameter("id", sighting.getId())
+                    .executeUpdate();
+        }
     }
 }

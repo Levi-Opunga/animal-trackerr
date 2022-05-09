@@ -16,5 +16,7 @@ public interface AnimalDao {
     public void deleteById(int id);
     public void deleteAll();
 
+    public void update(Animal animal);
+
 
 }

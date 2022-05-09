@@ -63,4 +63,9 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
         }
 
     }
+
+    @Override
+    public void update(EndangeredAnimal animal) {
+
+    }
 }

@@ -1,16 +1,17 @@
 {{#partial "content"}}
     <div class="row">
-        {{#each sighting}}
+        {{#each endangered}}
+
             <div class="col-md-3">
                 <div class="card bg-light mt-3 mb-3 " style="max-width: 21rem; height: 19rem;">
-                    <div class="card-header h2 text-dark ">{{Animal_Type}}</div>
+                    <div class="card-header text-dark ">{{name}}</div>
                     <div class="card-body bg-secondary">
-                        <h5 class="card-title bg-secondary">Animal id: {{Animal_Id}}</h5>
-                        <p class="card-text bg-secondary">Latitude :{{latitude}} | Longitude :{{longitude}} </p>
-                        <a href="/sighting/{{id}}">
+                        <h5 class="card-title bg-secondary">Age: {{age}}</h5>
+                        <p class="card-text bg-secondary">Gender:{{gender}} | Health status:{{health_status}} </p>
+                        <a href="/endangered-form/{{id}}">
                             <button type="button" class="btn btn-light">Update</button>
                         </a>
-                        <a href="/delete-sighting/{{id}}">
+                        <a href="/delete-endangered/{{id}}">
                             <button type="button" class="btn btn-danger">Delete</button>
                         </a>
                     </div>
@@ -21,8 +22,9 @@
             </div>
         {{/each}}
     </div>
-    <a href="/delete-all-sightings">
-        <button type="button" class="btn btn-secondary  mt-5">Delete All</button>
+
+    <a href="/delete-all-endangeredAnimals">
+        <button type="button" class="btn mt-5 btn-secondary">Delete All</button>
     </a>
 
 {{/partial}}

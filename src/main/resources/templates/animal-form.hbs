@@ -1,19 +1,42 @@
 {{#partial "content"}}
-    <form action="/animal-post"  style="border: 4px solid white;" method="post">
-        <div class="text-center container pt-5 pb-5">
-            <div class="form-row pt-5">
-                <div class="col-md-12">
-                    <label for="animal-name">Animal Name</label>
-                    <input class="form-control form-control-lg" required class="form-group" name="animal-name" id="animal-name"
-                           type="text" placeholder="Enter the Animal Name">
+    {{#if update}}
+<h3>Enter your Update</h3>
+        <form action="/animal-update/{{animal.id}}"  style="border: 4px solid white;" method="post">
+            <div class="text-center container pt-5 pb-5">
+                <div class="form-row pt-5">
+                    <div class="col-md-12">
+                        <label for="animal-name">Animal Name</label>
+                        <input class="form-control form-control-lg" required class="form-group" name="animal-name" id="animal-name"
+                               type="text" placeholder="Enter the Animal Name">
+                    </div>
+
+
                 </div>
+                <div class=" pt-5 text-center pb-5">
+                    <button type="submit" class="btn btn-light">Add Animal</button>
+                </div>
+            </div>
+        </form>
 
 
+{{else}}
+        <form action="/animal-post" style="border: 4px solid white;" method="post">
+            <div class="text-center container pt-5 pb-5">
+                <div class="form-row pt-5">
+                    <div class="col-md-12">
+                        <label for="animal-name">Animal Name</label>
+                        <input class="form-control form-control-lg" required class="form-group" name="animal-name"
+                               id="animal-name"
+                               type="text" placeholder="Enter the Animal Name">
+                    </div>
+
+
+                </div>
+                <div class=" pt-5 text-center pb-5">
+                    <button type="submit" class="btn btn-light">Add Animal</button>
+                </div>
             </div>
-            <div class=" pt-5 text-center pb-5">
-                <button type="submit" class="btn btn-light">Add Animal</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    {{/if}}
 {{/partial}}
 {{>layout.hbs}}

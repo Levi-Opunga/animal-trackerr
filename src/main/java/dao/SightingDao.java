@@ -14,5 +14,6 @@ public interface SightingDao{
     //Delete
     public void deleteById(int id);
     public void deleteAll();
+    public void update(Sighting sighting);
 
  }

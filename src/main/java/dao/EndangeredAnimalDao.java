@@ -13,4 +13,7 @@ public interface EndangeredAnimalDao {
     //Delete
     public void deleteById(int id);
     public void deleteAll();
+
+    public void update(EndangeredAnimal animal);
+
 }

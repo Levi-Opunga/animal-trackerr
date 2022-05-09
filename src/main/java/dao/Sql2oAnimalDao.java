@@ -63,4 +63,15 @@ public class Sql2oAnimalDao implements AnimalDao {
         }
 
     }
+
+    @Override
+    public void update(Animal animal) {
+        try (Connection con =DB.sql2o.open()){
+            String sql = "Update Animal set (name, record_date) = (:name, now()) where id=:id";
+             con.createQuery(sql,true)
+                     .addParameter("name",animal.getName())
+                    .addParameter("id",animal.getId())
+                    .executeUpdate();
+        }
+    }
 }
