@@ -1,0 +1,16 @@
+{{#partial "content"}}
+    {{#if animals}}
+        {{#each animals}}
+            <div class="card">
+                <h5 class="card-header " style="background-color:white; color:black;">Animal Id:{{id}}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{time_record}}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
+
+{{/partial}}
+{{>layout.hbs}}

@@ -19,12 +19,6 @@ Sql2oSightingDao dao = new Sql2oSightingDao();
     assertEquals(true,sighting.equals(dao.getById(sighting.getId())));
 }
 
-
-
-
-
-
-
     public Sighting make_sighting(){
         return new Sighting(2,"lion", (float) 7.78, (float) 5.77);
     }

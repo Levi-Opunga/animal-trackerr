@@ -2,12 +2,15 @@ package models;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class Sighting {
   public int Animal_Id;
   public String Animal_Type;
+
+  public final static List<String> ANIMAL_TYPES = List.of("Regular Animal","Endangered Animal");
 private Float longitude ;
 private Float latitude;
  Timestamp record_date;
