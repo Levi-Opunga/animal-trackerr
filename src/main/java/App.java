@@ -73,11 +73,17 @@ public class App {
         post("sighting-update/:id",(request, response) -> {
          Map<String, Object> model = new HashMap<String, Object>();
             int id = Integer.parseInt(request.params(":id"));
-            Animal animal = animalDao.getById(id);
-            String animalName = request.queryParams("animal-name");
-            animal.setName(animalName);
-            animalDao.update(animal);
-            response.redirect("/animals");
+            Sighting sighting = sightingDao.getById(id);
+            int animalId = Integer.parseInt(request.queryParams("animalId"));
+            String animalType = request.queryParams("animalType");
+            Float latitude = Float.valueOf(request.queryParams("latitude"));
+            Float longitude = Float.valueOf(request.queryParams("longitude"));
+            sighting.setAnimalType(animalType);
+            sighting.setLatitude(latitude);
+            sighting.setLongitude(longitude);
+            sighting.setAnimal_Id(animalId);
+            sightingDao.update(sighting);
+            response.redirect("/sightings");
         return null;
         }, new HandlebarsTemplateEngine());
 
