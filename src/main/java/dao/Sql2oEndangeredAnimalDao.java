@@ -10,13 +10,13 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public void save(EndangeredAnimal animal) {
-        try (Connection con =DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO endangeredanimal (name ,health_status ,age ,gender ,record_date) values (:name,:health_status,:age, :gender ,now())";
-            int id = (int) con.createQuery(sql,true)
-                    .addParameter("name",animal.getName())
-                    .addParameter("health_status",animal.getHealthStatus())
-                    .addParameter("age",animal.getAge())
-                    .addParameter("gender",animal.getGender())
+            int id = (int) con.createQuery(sql, true)
+                    .addParameter("name", animal.getName())
+                    .addParameter("health_status", animal.getHealthStatus())
+                    .addParameter("age", animal.getAge())
+                    .addParameter("gender", animal.getGender())
                     .executeUpdate()
                     .getKey();
             animal.setId(id);
@@ -28,7 +28,7 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public EndangeredAnimal getById(int id) {
-        try(Connection con = DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             return con.createQuery("SELECT * FROM endangeredanimal WHERE id = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(EndangeredAnimal.class);
@@ -37,7 +37,7 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public List<EndangeredAnimal> getAll() {
-        try(Connection con = DB.sql2o.open()){
+        try (Connection con = DB.sql2o.open()) {
             return con.createQuery("SELECT * FROM endangeredanimal")
                     .executeAndFetch(EndangeredAnimal.class);
         }
@@ -50,7 +50,7 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex){
+        } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
@@ -66,6 +66,16 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public void update(EndangeredAnimal animal) {
+        try (Connection con = DB.sql2o.open()) {
+            String sql = "UPDATE endangeredanimal SET (name ,health_status ,age ,gender ,record_date) = (:name,:health_status,:age, :gender ,now()) WHERE id=:id";
+            con.createQuery(sql, true)
+                    .addParameter("name", animal.getName())
+                    .addParameter("health_status", animal.getHealthStatus())
+                    .addParameter("age", animal.getAge())
+                    .addParameter("gender", animal.getGender())
+                    .addParameter("id", animal.getId())
+                    .executeUpdate();
 
+        }
     }
 }

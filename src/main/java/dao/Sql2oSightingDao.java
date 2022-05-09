@@ -68,7 +68,7 @@ public class Sql2oSightingDao implements SightingDao {
     @Override
     public void update(Sighting sighting) {
         try (Connection con = DB.sql2o.open()) {
-            String sql = "Update sighting (animal_id,animal_type,longitude,latitude,record_date) = (:animal_id,:animal_type,:longitude,:latitude,now()) where id=:id";
+            String sql = "Update sighting set (animal_id,animal_type,longitude,latitude,record_date) = (:animal_id,:animal_type,:longitude,:latitude,now()) where id=:id";
             con.createQuery(sql, true)
                     .addParameter("animal_type", sighting.getAnimal_Type())
                     .addParameter("longitude", sighting.getLongitude())

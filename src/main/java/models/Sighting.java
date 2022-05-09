@@ -24,6 +24,7 @@ private Float latitude;
    this.latitude = latitude;
   }
 
+
     public String getDate() {
         return date;
     }

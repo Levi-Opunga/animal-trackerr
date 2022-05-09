@@ -13,7 +13,15 @@ import java.util.*;
 import static spark.Spark.*;
 
 public class App {
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
     public static void main(String[] args) {
+        port(getHerokuAssignedPort());
         staticFileLocation("/public");
         //creating DAO instances
         Sql2oEndangeredAnimalDao endangeredAnimalDao = new Sql2oEndangeredAnimalDao();
@@ -25,6 +33,35 @@ public class App {
             Map<String, Object> model = new HashMap<String, Object>();
             return modelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
+
+        /// Delete individual
+        get("/delete-sighting/:id",(request, response)->{
+            int id = Integer.parseInt(request.params(":id"));
+            sightingDao.deleteById(id);
+            response.redirect("/sightings");
+            return null;
+        },new HandlebarsTemplateEngine());
+
+        get("/delete-endangered/:id",(request, response)->{
+            int id = Integer.parseInt(request.params(":id"));
+            sightingDao.deleteById(id);
+            response.redirect("/endangered-animals");
+            return null;
+        },new HandlebarsTemplateEngine());
+
+        get("/delete-animal/:id",(request, response)->{
+            int id = Integer.parseInt(request.params(":id"));
+            animalDao.deleteById(id);
+            response.redirect("/animals");
+            return null;
+        },new HandlebarsTemplateEngine());
+
+
+
+
+
+
+//delete  all
 
         get("/delete-all-sightings", (request, response) -> {
             sightingDao.deleteAll();
@@ -43,8 +80,7 @@ public class App {
             response.redirect("/animals");
             return null;
         },new HandlebarsTemplateEngine());
-//  /animal-form/{{id}}
-        // /delete-endangered/{{id}}
+//  /animal update ////////////////////////////////////////////
 
         get("animal/:id",(request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
@@ -58,16 +94,33 @@ public class App {
             return modelAndView(model,"animal-form.hbs");
         },new HandlebarsTemplateEngine());
 
+
+        post("animal-update/:id",(request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            int id = Integer.parseInt(request.params(":id"));
+            Animal animal = animalDao.getById(id);
+            String animalName = request.queryParams("animal-name");
+            animal.setName(animalName);
+            animalDao.update(animal);
+            response.redirect("/animals");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+
+
+//// sightings update ///////////////////////////////////////////////
         get("/sighting/:id",(request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             boolean position = true;
             Map<String,Object> model =new HashMap<String,Object>();
             Boolean update = true;
            Sighting sighting = sightingDao.getById(id);
-            model.put("animal",sighting);
+            List<String> animalTypes = Sighting.ANIMAL_TYPES;
+            model.put("animalTypes", animalTypes);
+            model.put("sighting",sighting);
             model.put("update",update);
             model.put("position",position);
-            return modelAndView(model,"animal-form.hbs");
+            return modelAndView(model,"sighting-form.hbs");
         },new HandlebarsTemplateEngine());
 
         post("sighting-update/:id",(request, response) -> {
@@ -86,8 +139,42 @@ public class App {
             response.redirect("/sightings");
         return null;
         }, new HandlebarsTemplateEngine());
+//// endangered animal update
+        get("/endangered/:id",(request, response) -> {
+            int id = Integer.parseInt(request.params(":id"));
+            boolean position = true;
+            Map<String,Object> model =new HashMap<String,Object>();
+            Boolean update = true;
+            EndangeredAnimal endangered = endangeredAnimalDao.getById(id);
+            List<String> ages = EndangeredAnimal.AGE_STATUS;
+            List<String> genders = EndangeredAnimal.GENDER_CHOICE;
+            List<String> healthStatuses = EndangeredAnimal.HEALTH_STATUS;
+            model.put("position",position);
+            model.put("ages", ages);
+            model.put("genders", genders);
+            model.put("healthStatuses", healthStatuses);
+            model.put("update",update);
+            model.put("endangered",endangered);
+            return modelAndView(model,"EndangeredAnimal-form.hbs");
+        },new HandlebarsTemplateEngine());
 
 
+        post("endangered-update/:id",(request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            int id = Integer.parseInt(request.params(":id"));
+            EndangeredAnimal endangered = endangeredAnimalDao.getById(id);
+            String name = request.queryParams("name");
+            String gender = request.queryParams("gender");
+            String age = request.queryParams("age");
+            String healthStatus = request.queryParams("healthStatus");
+            endangered.setName(name);
+            endangered.setGender(gender);
+            endangered.setHealth_status(healthStatus);
+            endangered.setAge(age);
+            endangeredAnimalDao.update(endangered);
+            response.redirect("/endangered-animals");
+            return null;
+        }, new HandlebarsTemplateEngine());
 
         // get sighting form
         get("/sighting-form", (request, response) -> {
@@ -115,10 +202,8 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         get("/success", (request, response) -> {
-
             Map<String, Object> model = new HashMap<String, Object>();
             return modelAndView(model, "success.hbs");
-
         }, new HandlebarsTemplateEngine());
 
         post("/animal-post", (request, response) -> {
@@ -157,12 +242,8 @@ public class App {
             String gender = request.queryParams("gender");
             String age = request.queryParams("age");
             String healthStatus = request.queryParams("healthStatus");
-            System.out.println(healthStatus + age + gender + name);
-            EndangeredAnimal anim = new EndangeredAnimal("White Tiger", "sick", "old", "male");
             EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, healthStatus, age, gender);
-            endangeredAnimalDao.save(anim);
             endangeredAnimalDao.save(endangeredAnimal);
-
             response.redirect("/success");
             return null;
         }, new HandlebarsTemplateEngine());
@@ -185,8 +266,8 @@ public class App {
             for (Sighting sighting : sightings){
                 sighting.setDate(DateFormat.getDateTimeInstance().format(sighting.getRecord_date()));
             }
-            model.put("endangered", sightings);
-            return modelAndView(model, "endangeredAnimals.hbs");
+            model.put("sighting", sightings);
+            return modelAndView(model, "sightings.hbs");
         }, new HandlebarsTemplateEngine());
 
 
