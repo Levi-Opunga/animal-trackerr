@@ -1,12 +1,14 @@
 package dao;
 
 import models.Animal;
-import models.EndangeredAnimal;
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class Sql2oAnimalDaoTest {
+  @Rule
+  public DatabaseRule databaseRule =new DatabaseRule();
     @Test
     public void testIfItSavesAndIfFindByIdWorks() throws Exception {
         Animal animal = make_animal();
