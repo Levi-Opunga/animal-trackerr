@@ -22,9 +22,9 @@ public class EndangeredAnimal {
     }
 
     public Timestamp record_date;
-    public final static List<String> HEALTH_STATUS = List.of("In good Health condition","In need of Urgent Veterinary care","Not in a bad shape can survive");
-    public final static List<String> AGE_STATUS = List.of("Newborn","Young","Adult","Very Old");
-    public final static List<String> GENDER_CHOICE = List.of("Male","Female");
+    public final static String[] HEALTH_STATUS = {"In good Health condition","In need of Urgent Veterinary care","Not in a bad shape can survive"};
+    public final static String[] AGE_STATUS = {"Newborn","Young","Adult","Very Old"};
+    public final static String[] GENDER_CHOICE = {"Male","Female"};
 
     public EndangeredAnimal( String name, String healthStatus, String age, String gender) {
         this.name = name;

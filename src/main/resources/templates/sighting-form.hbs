@@ -1,16 +1,15 @@
 {{#partial "content"}}
     {{#if update}}
         <h2>Enter your Update</h2>
-        <form action="/sighting-update/{{sighting.id}}" method="post" style="border: 4px solid white;" class="col-md-10 offset-1">
+        <form action="/sighting-update/{{sighting.id}}" method="post" style="border: 4px solid white;"
+              class="col-md-10 offset-1">
             <div class="text-center container pt-5">
                 <div class="">
                     <div class="col form-row">
                         <label for="animalId">Animal Id</label>
                         <input class="form-control form-group form-control-lg" required name="animalId" id="animalId"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Animal ID">
                     </div>
-
-
                     <div class="col">
                         <div class="form-group form-row pt-3">
                             <label for="animalType">Animal Type Selection</label>
@@ -24,17 +23,15 @@
                         </div>
 
                     </div>
-
                     <div class="col form-row mt-3 ">
-
                         <label for="latitude">Latitude</label>
                         <input class="form-control form-group form-control-lg" name="latitude" required id="latitude"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Latitude">
                     </div>
                     <div class="col form-row mt-3">
                         <label for="longitude">Longitude </label>
                         <input class="form-control form-group form-control-lg" name="longitude" required id="longitude"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Animal Longitude">
                     </div>
                     <div class=" pt-4 pb-4">
                         <button type="submit" class="btn btn-light ">Add Sighting</button>
@@ -43,13 +40,7 @@
             </div>
         </form>
 
-
-
     {{else}}
-
-
-
-
 
         <form action="/post-sighting" method="post" style="border: 4px solid white;" class="col-md-10 offset-1">
             <div class="text-center container pt-5">
@@ -57,10 +48,8 @@
                     <div class="col form-row">
                         <label for="animalId">Animal Id</label>
                         <input class="form-control form-group form-control-lg" required name="animalId" id="animalId"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Animal ID">
                     </div>
-
-
                     <div class="col">
                         <div class="form-group form-row pt-3">
                             <label for="animalType">Animal Type Selection</label>
@@ -72,19 +61,16 @@
                                 {{/each}}
                             </select>
                         </div>
-
                     </div>
-
                     <div class="col form-row mt-3 ">
-
                         <label for="latitude">Latitude</label>
                         <input class="form-control form-group form-control-lg" name="latitude" required id="latitude"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Animal Latitude">
                     </div>
                     <div class="col form-row mt-3">
                         <label for="longitude">Longitude </label>
                         <input class="form-control form-group form-control-lg" name="longitude" required id="longitude"
-                               type="number" placeholder="Enter the Animal name">
+                               type="number" placeholder="Enter the Animal Longitude">
                     </div>
                     <div class=" pt-4 pb-4">
                         <button type="submit" class="btn btn-light ">Add Sighting</button>

@@ -14,7 +14,6 @@ public class Sql2oEndangeredAnimalDaoTest {
     public void TestIfItSaves() throws Exception {
         EndangeredAnimal animal = make_animal();
         dao.save(animal);
-
         assertEquals(true,animal.equals(dao.getById(animal.getId())));
 
     }

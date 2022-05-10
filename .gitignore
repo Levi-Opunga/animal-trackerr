@@ -44,6 +44,13 @@ gradle
 gradlew.bat
 gradlew
 settings.gradle
+target/*
+target/
+target/heroku/build.tgz
+target/heroku/*
+build
+build/*
+build/classes/*
 
 # IntelliJ #
 ############

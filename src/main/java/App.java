@@ -3,7 +3,7 @@ import dao.*;
 import models.Animal;
 import models.EndangeredAnimal;
 import models.Sighting;
-import spark.staticfiles.StaticFilesFolder;
+
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.text.DateFormat;
@@ -13,16 +13,18 @@ import java.util.*;
 import static spark.Spark.*;
 
 public class App {
-    static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
-        }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
+//    static int getHerokuAssignedPort() {
+//        ProcessBuilder processBuilder = new ProcessBuilder();
+//        if (processBuilder.environment().get("PORT") != null) {
+//            return Integer.parseInt(processBuilder.environment().get("PORT"));
+//        }
+//        return 4567;
+//    }
     public static void main(String[] args) {
-        port(getHerokuAssignedPort());
+
+//        port(getHerokuAssignedPort());
         staticFileLocation("/public");
+
         //creating DAO instances
         Sql2oEndangeredAnimalDao endangeredAnimalDao = new Sql2oEndangeredAnimalDao();
         Sql2oAnimalDao animalDao = new Sql2oAnimalDao();
@@ -33,6 +35,33 @@ public class App {
             Map<String, Object> model = new HashMap<String, Object>();
             return modelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
+
+
+        // get sighting form
+        get("/sightingform", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String[] animalTypes = Sighting.ANIMAL_TYPES;
+            model.put("animalTypes", animalTypes);
+            return modelAndView(model, "sighting-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //
+        get("/animal-form", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            return modelAndView(model, "animal-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/endangeredform", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String[] ages = EndangeredAnimal.AGE_STATUS;
+            String[] genders = EndangeredAnimal.GENDER_CHOICE;
+            String[] healthStatuses = EndangeredAnimal.HEALTH_STATUS;
+            model.put("ages", ages);
+            model.put("genders", genders);
+            model.put("healthStatuses", healthStatuses);
+            return modelAndView(model, "EndangeredAnimal-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
         /// Delete individual
         get("/delete-sighting/:id",(request, response)->{
@@ -115,7 +144,7 @@ public class App {
             Map<String,Object> model =new HashMap<String,Object>();
             Boolean update = true;
            Sighting sighting = sightingDao.getById(id);
-            List<String> animalTypes = Sighting.ANIMAL_TYPES;
+            String[] animalTypes = Sighting.ANIMAL_TYPES;
             model.put("animalTypes", animalTypes);
             model.put("sighting",sighting);
             model.put("update",update);
@@ -146,9 +175,9 @@ public class App {
             Map<String,Object> model =new HashMap<String,Object>();
             Boolean update = true;
             EndangeredAnimal endangered = endangeredAnimalDao.getById(id);
-            List<String> ages = EndangeredAnimal.AGE_STATUS;
-            List<String> genders = EndangeredAnimal.GENDER_CHOICE;
-            List<String> healthStatuses = EndangeredAnimal.HEALTH_STATUS;
+            String[] ages = EndangeredAnimal.AGE_STATUS;
+            String[] genders = EndangeredAnimal.GENDER_CHOICE;
+            String[] healthStatuses = EndangeredAnimal.HEALTH_STATUS;
             model.put("position",position);
             model.put("ages", ages);
             model.put("genders", genders);
@@ -176,30 +205,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        // get sighting form
-        get("/sighting-form", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            List<String> animalTypes = Sighting.ANIMAL_TYPES;
-            model.put("animalTypes", animalTypes);
-            return modelAndView(model, "sighting-form.hbs");
-        }, new HandlebarsTemplateEngine());
-
-        //
-        get("/animal-form", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            return modelAndView(model, "animal-form.hbs");
-        }, new HandlebarsTemplateEngine());
-
-        get("/endangered-form", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            List<String> ages = EndangeredAnimal.AGE_STATUS;
-            List<String> genders = EndangeredAnimal.GENDER_CHOICE;
-            List<String> healthStatuses = EndangeredAnimal.HEALTH_STATUS;
-            model.put("ages", ages);
-            model.put("genders", genders);
-            model.put("healthStatuses", healthStatuses);
-            return modelAndView(model, "EndangeredAnimal-form.hbs");
-        }, new HandlebarsTemplateEngine());
 
         get("/success", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -218,6 +223,9 @@ public class App {
         get("/animals", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             List<Animal> animals = animalDao.getAll();
+            for (Animal animal: animals){
+                animal.setDate(DateFormat.getDateTimeInstance().format(animal.getRecord_date()));
+            }
             model.put("animals", animals);
             return modelAndView(model, "animals.hbs");
         }, new HandlebarsTemplateEngine());

@@ -10,7 +10,7 @@ public class Sighting {
   public int Animal_Id;
   public String Animal_Type;
 
-  public final static List<String> ANIMAL_TYPES = List.of("Regular Animal","Endangered Animal");
+  public final static String[] ANIMAL_TYPES = {"Regular Animal","Endangered Animal"};
 private Float longitude ;
 private Float latitude;
  Timestamp record_date;
