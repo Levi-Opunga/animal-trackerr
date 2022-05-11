@@ -24,7 +24,7 @@ This is a spark application for recording details on animals and tracking them. 
 3. In terminal open the applications root folder
 4. To run in terminal use `gradle run` then open your browser and view project on localhost port 4567 - - >"https://locahost:4567"
 5. To open in IDE `[IDE name] .` eg `code .`
-   6.Recreate the the database in your local psql by running the following
+6. Recreate the the database in your local psql by running the following
 ```
 CREATE DATABASE animal_tracker;
 \c animal_tracker
