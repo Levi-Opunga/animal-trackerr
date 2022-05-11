@@ -16,7 +16,7 @@ public class EndangeredAnimalTest {
 
 
     public EndangeredAnimal make_animal(){
-        return new EndangeredAnimal(1,"White Tiger", EndangeredAnimal.HEALTH_STATUS.get(1),EndangeredAnimal.AGE_STATUS.get(1), EndangeredAnimal.GENDER_CHOICE.get(1));
+        return new EndangeredAnimal("White Tiger", EndangeredAnimal.HEALTH_STATUS[1],EndangeredAnimal.AGE_STATUS[1], EndangeredAnimal.GENDER_CHOICE[1]);
     }
 
 }

@@ -1,0 +1,31 @@
+{{#partial "content"}}
+    <div class="row">
+        {{#each endangered}}
+
+            <div class="col-md-3">
+                <div class="card bg-light mt-3 mb-3 " style="max-width: 21rem; height: 19rem;">
+                    <div class="card-header text-dark ">{{name}}</div>
+                    <div class="card-body bg-secondary">
+                        <h5 class="card-title bg-secondary">Age: {{age}}</h5>
+                        <p class="card-text bg-secondary">Gender:{{gender}} | Health status:{{health_status}} </p>
+                        <a href="/endangered/{{id}}">
+                            <button type="button" class="btn btn-light">Update</button>
+                        </a>
+                        <a href="/delete-endangered/{{id}}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <p class="bg-light text-dark">Created on:{{date}} </p>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+    <a href="/delete-all-endangeredAnimals">
+        <button type="button" class="btn mt-5 btn-secondary">Delete All</button>
+    </a>
+
+{{/partial}}
+{{>layout.hbs}}

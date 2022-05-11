@@ -1,0 +1,24 @@
+*{
+    background-color: #05192d;
+    color: white;
+}
+.bg{
+    background-color: #8034fc;
+    color:white;
+}
+
+a{
+    color: white;
+}
+footer{
+    background-color: #213147;
+}
+.in-footer{
+    background-color: #213147;
+}
+.card-img-top{
+height: 14rem;
+}
+.card-text{
+color: blue;
+}

@@ -1,0 +1,29 @@
+{{#partial "content"}}
+    <div class="row">
+        {{#each sighting}}
+            <div class="col-md-4">
+                <div class="card bg-light mt-3 mb-3 " style="width: 26rem; height: 19rem;">
+                    <div class="card-header h2 text-dark ">{{Animal_Type}}</div>
+                    <div class="card-body bg-secondary">
+                        <h5 class="card-title bg-secondary">Animal id:{{animal_Id}}</h5>
+                        <p class="card-text bg-secondary">Latitude :{{latitude}} °N| Longitude :{{longitude}} °W</p>
+                        <a href="/sighting/{{id}}">
+                            <button type="button" class="btn btn-light">Update</button>
+                        </a>
+                        <a href="/delete-sighting/{{id}}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <p class="bg-light text-dark">Created on:{{date}} </p>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <a href="/delete-all-sightings">
+        <button type="button" class="btn btn-secondary  mt-5">Delete All</button>
+    </a>
+
+{{/partial}}
+{{>layout.hbs}}
