@@ -17,6 +17,33 @@ public class Sql2oEndangeredAnimalDaoTest {
         assertEquals(true,animal.equals(dao.getById(animal.getId())));
 
     }
+    @Test
+    public void test_if_it_deletes_an_endangeredAnimalById(){
+        EndangeredAnimal endangeredAnimal = make_animal();
+        dao.save(endangeredAnimal);
+        dao.deleteById(endangeredAnimal.id);
+        assertEquals(0,dao.getAll().size());
+    }
+    @Test
+    public void  testIfItDeletesAll(){
+        EndangeredAnimal endangeredAnimal = make_animal();
+        EndangeredAnimal endangeredAnimal1 = make_animal();
+        EndangeredAnimal endangeredAnimal2 = make_animal();
+        dao.save(endangeredAnimal);
+        dao.save(endangeredAnimal1);
+        dao.save(endangeredAnimal2);
+        dao.deleteAll();
+        assertEquals(0,dao.getAll().size());
+    }
+    @Test
+    public  void testIfItUpdates(){
+        EndangeredAnimal endangeredAnimal = make_animal();
+        dao.save(endangeredAnimal);
+        endangeredAnimal.setName("dodo bird");
+        dao.update(endangeredAnimal);
+        assertEquals(endangeredAnimal,dao.getById(endangeredAnimal.getId()));
+
+    }
 
 
     public EndangeredAnimal make_animal(){
