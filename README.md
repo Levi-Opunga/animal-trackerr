@@ -21,17 +21,22 @@ This is a spark application for recording details on animals and tracking them. 
 ## Installation
 1. Clone or download repository as as an archive
 2. If archive unzip the archive to get project folder
-3. In terminal open the applications root folder
-4. To run in terminal use `gradle run` then open your browser and view project on localhost port 4567 - - >"https://locahost:4567"
-5. To open in IDE `[IDE name] .` eg `code .`
-6. Recreate the the database in your local psql by running the following
+3. In the folder in a Java ide of your choice and execute built with gradle and open in localhost:4567
+4. To run in terminal use `gradle run` while in project root then open your browser and view project on localhost port 4567 - - >"https://locahost:4567"
+5. Recreate the database in your local psql by running the following postgresql script
+
 ```
 CREATE DATABASE animal_tracker;
 \c animal_tracker
 CREATE TABLE animal (id serial PRIMARY KEY, name varchar, record_date timestamp) ;
 CREATE TABLE endangeredanimal (id serial PRIMARY KEY, name varchar, gender varchar, record_date timestamp, age varchar, health_status varchar) ;
 CREATE TABLE sighting (id serial PRIMARY KEY, animal_type varchar , longitude Float, latitude Float , record_date timestamp , animal_id int);
+CREATE DATABASE animal_tracker_test WITH TEMPLATE animal_tracker
 ```
+
+### NOTE: `animal_tracker_test` and `animal_tracker` database needs to be recreated locally for routes to load and for the tests run.
+
+
 ## To Contribute or Fix bug
 To fix a bug or enhance an existing module, follow these steps:
 
